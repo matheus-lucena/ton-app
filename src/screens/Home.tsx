@@ -14,16 +14,22 @@ import Button from '../components/Button';
 import ItemList from '../components/Home/ItemList';
 import Section from '../components/Section';
 import Item, { ItemState } from '../entity/Item';
-import { RootState } from '../redux/store';
+import { RootState, store } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrement, increment } from '../redux/home/slice';
+import { fetchList } from '../redux/home/thunk';
 
 const {height} = Dimensions.get('window')
 
 
 const Home = (): React.JSX.Element => {
+  const buyItems: ItemState[] = useSelector((state: RootState) => state.counterHome.buyItems)
   const items: ItemState[] = useSelector((state: RootState) => state.counterHome.items)
-  const dispatch = useDispatch()
+  const total: number = useSelector((state: RootState) => state.counterHome.total)
+
+  useEffect(()=>{
+    store.dispatch(fetchList())
+  }, [])
 
   return (
     <View style={{flex: 1, backgroundColor: Colors.WHITE}}>
@@ -36,15 +42,15 @@ const Home = (): React.JSX.Element => {
               <Text style={styles.sectionDescription}>As melhores taxas do mercado</Text>
           </Section>
           <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollList}>
-              {ITEM_LIST.map((item)=> (
-                <ItemList count={items.find((_value) => _value.sn == item.sn)?.count} onPressAdd={() => dispatch(increment(item))} onPressSub={() => dispatch(decrement(item))} key={item.sn} item={item} />
+              {items.map((item)=> (
+                <ItemList count={buyItems.find((_value) => _value.sn == item.sn)?.count} onPressAdd={() => store.dispatch(increment(item))} onPressSub={() => store.dispatch(decrement(item))} key={item.sn} item={item} />
               ))}
           </ScrollView>
       </View>
       <View style={styles.buyResume}>
           <View style={{flexDirection: 'column', justifyContent: 'center', paddingLeft: 30}}>
               <Text>Total</Text>
-              <Text style={{fontWeight: 'bold', color: 'black'}}>R$ 510,00</Text>
+              <Text style={{fontWeight: 'bold', color: 'black'}}>R$ {total.toFixed(2)}</Text>
           </View>
 
           <Button 

@@ -25,5 +25,11 @@ export const ITEM_LIST: Item[] = [
         sn: '178293718978',
         image_url: 'https://res.cloudinary.com/dunz5zfpt/fl_progressive/f_auto,c_limit,w_48,q_auto/site-ton/maquininhas/new-t3-1',
         value: 80.00
+    },
+    {
+        name: 'T4',
+        sn: '90182390189038',
+        image_url: 'https://res.cloudinary.com/dunz5zfpt/fl_progressive/f_auto,c_limit,w_48,q_auto/site-ton/maquininhas/new-t3-smart-1',
+        value: 80.00
     }
 ]
