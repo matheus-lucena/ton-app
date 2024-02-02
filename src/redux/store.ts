@@ -1,5 +1,6 @@
 import { configureStore, ThunkAction, Action } from '@reduxjs/toolkit';
-import counterHomeReducer from './home/slice'
+import homeSliceReducer from './home/slice'
+import authSliceReducer from './auth/slice'
 import { persistCombineReducers, persistStore, 
   FLUSH,
   REHYDRATE,
@@ -28,7 +29,8 @@ const persistConfig = {
 
 const persistedReducer = persistCombineReducers(persistConfig,
   {
-    counterHome: counterHomeReducer
+    home: homeSliceReducer,
+    auth: authSliceReducer
   }
 )
 

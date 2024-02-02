@@ -9,12 +9,11 @@ import {
 import LinearGradient from 'react-native-linear-gradient';
 
 import Colors, { HOME_GRADIENT } from '../constants/colors';
-import {ITEM, ITEM_LIST} from '../mocks'
 import Button from '../components/Button';
 import ItemList from '../components/Home/ItemList';
 import Section from '../components/Section';
-import Item, { ItemState } from '../entity/Item';
-import { RootState, store } from '../redux/store';
+import { ItemState } from '../entity/Item';
+import { AppDispatch, RootState } from '../redux/store';
 import { useDispatch, useSelector } from 'react-redux';
 import { decrement, increment } from '../redux/home/slice';
 import { fetchList } from '../redux/home/thunk';
@@ -23,12 +22,13 @@ const {height} = Dimensions.get('window')
 
 
 const Home = (): React.JSX.Element => {
-  const buyItems: ItemState[] = useSelector((state: RootState) => state.counterHome.buyItems)
-  const items: ItemState[] = useSelector((state: RootState) => state.counterHome.items)
-  const total: number = useSelector((state: RootState) => state.counterHome.total)
+  const buyItems: ItemState[] = useSelector((state: RootState) => state.home.buyItems)
+  const items: ItemState[] = useSelector((state: RootState) => state.home.items)
+  const total: number = useSelector((state: RootState) => state.home.total)
+  const dispatch = useDispatch<AppDispatch>()
 
   useEffect(()=>{
-    store.dispatch(fetchList())
+    dispatch(fetchList())
   }, [])
 
   return (
@@ -43,7 +43,7 @@ const Home = (): React.JSX.Element => {
           </Section>
           <ScrollView contentInsetAdjustmentBehavior="automatic" style={styles.scrollList}>
               {items.map((item)=> (
-                <ItemList count={buyItems.find((_value) => _value.sn == item.sn)?.count} onPressAdd={() => store.dispatch(increment(item))} onPressSub={() => store.dispatch(decrement(item))} key={item.sn} item={item} />
+                <ItemList count={buyItems.find((_value) => _value.sn == item.sn)?.count} onPressAdd={() => dispatch(increment(item))} onPressSub={() => dispatch(decrement(item))} key={item.sn} item={item} />
               ))}
           </ScrollView>
       </View>
