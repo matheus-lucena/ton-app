@@ -1,14 +1,14 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet } from "react-native";
-import { NativeStackNavigationProp } from '@react-navigation/native-stack';
-import ScreensNavigation from "../constants/navigation";
+import React, {View, Text, StyleSheet} from 'react-native';
+import {NativeStackNavigationProp} from '@react-navigation/native-stack';
+import ScreensNavigation from '../constants/navigation';
+import {useState} from 'react';
 
-interface Props{
-  navigation: NativeStackNavigationProp<any>
+interface Props {
+  navigation: NativeStackNavigationProp<any>;
 }
 
 const Splash = (props: Props) => {
-  const {navigation} = props
+  const {navigation} = props;
   const [timePassed, setTimePassed] = useState(false);
 
   setTimeout(function () {
@@ -27,13 +27,13 @@ const Splash = (props: Props) => {
 
 const styles = StyleSheet.create({
   splash: {
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center"
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   text: {
-    fontSize: 20
-  }
+    fontSize: 20,
+  },
 });
 
 export default Splash;
