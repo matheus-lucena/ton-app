@@ -10,7 +10,7 @@ import LinearGradient from 'react-native-linear-gradient';
 
 import Colors, {HOME_GRADIENT} from '../constants/colors';
 import Button from '../components/Button';
-import ItemList from '../components/Home/ItemList';
+import ItemList from '../components/home/ItemList';
 import Section from '../components/Section';
 import {ItemState} from '../entity/Item';
 import {AppDispatch, RootState} from '../redux/store';
