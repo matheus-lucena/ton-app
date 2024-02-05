@@ -1,4 +1,4 @@
-import Item from './entity/Item';
+import Item from './entity/product';
 
 export const ITEM: Item = {
   name: 'teste',

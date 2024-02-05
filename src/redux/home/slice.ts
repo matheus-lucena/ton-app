@@ -1,6 +1,7 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import Item from '../../entity/Item';
+import Item from '../../entity/product';
 import {fetchList} from './thunk';
+import {ProductsResponse} from '../../entity/request/product';
 
 interface ItemState extends Item {
   count: number;
@@ -8,14 +9,12 @@ interface ItemState extends Item {
 
 export interface HomeState {
   buyItems: ItemState[];
-  items: Item[];
-  total: number;
+  items: ProductsResponse | undefined;
 }
 
 const initialState: HomeState = {
   buyItems: [],
-  items: [],
-  total: 0,
+  items: undefined,
 };
 
 export const homeSlice = createSlice({
@@ -37,7 +36,6 @@ export const homeSlice = createSlice({
           count: 1,
         });
       }
-      state.total += action.payload.value;
     },
     decrement: (state, action: PayloadAction<Item>) => {
       const item: ItemState | undefined = state.buyItems.find(
@@ -51,11 +49,6 @@ export const homeSlice = createSlice({
           state.buyItems[index].count -= 1;
         } else {
           state.buyItems.splice(index, 1);
-        }
-        if (state.total - item.value < 0) {
-          state.total = 0;
-        } else {
-          state.total -= item.value;
         }
       }
     },

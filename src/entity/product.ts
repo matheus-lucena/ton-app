@@ -1,12 +1,12 @@
-interface Item {
+interface Product {
   image_url: string;
   name: string;
   sn: string;
   value: number;
 }
 
-export interface ItemState extends Item {
+export interface ProductState extends Product {
   count?: number;
 }
 
-export default Item;
+export default Product;

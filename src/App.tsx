@@ -8,19 +8,20 @@ import Login from './screens/Login';
 import Splash from './screens/Splash';
 import {RootState, persistor, store} from './redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
+import {LoginResponse} from './entity/request/user';
 
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
-  const isSignedIn: boolean = useSelector(
-    (state: RootState) => state.auth.isSignedIn,
+  const token: LoginResponse | undefined = useSelector(
+    (state: RootState) => state.auth.token,
   );
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
         initialRouteName={ScreensNavigation.Login}>
-        {isSignedIn ? (
+        {token ? (
           <Stack.Screen name={ScreensNavigation.Home} component={Home} />
         ) : (
           <>

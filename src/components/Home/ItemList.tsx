@@ -1,7 +1,7 @@
 import React, {Image, StyleSheet, Text, View} from 'react-native';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Colors from '../../constants/colors';
-import Item from '../../entity/Item';
+import Item from '../../entity/product';
 
 interface Props {
   item: Item;

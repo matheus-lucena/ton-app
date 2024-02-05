@@ -6,7 +6,7 @@ import ItemList from '../../../src/components/home/ItemList';
 import {it} from '@jest/globals';
 
 import {render} from '@testing-library/react-native';
-import Item from '../../../src/entity/Item';
+import Item from '../../../src/entity/product';
 
 const item: Item = {
   image_url: 'image_url',
@@ -16,7 +16,6 @@ const item: Item = {
 };
 
 describe('<Button/>', () => {
-
   it('Renders successfully', () => {
     expect(
       render(

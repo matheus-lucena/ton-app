@@ -1,16 +1,17 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
 import {loginThunk} from './thunk';
+import {LoginResponse} from '../../entity/request/user';
 
 export interface HomeState {
-  isSignedIn: boolean;
   email?: string;
   password?: string;
+  token: LoginResponse | undefined;
 }
 
 const initialState: HomeState = {
-  isSignedIn: false,
-  email: '',
-  password: '',
+  token: undefined,
+  email: 'teste@teste.com',
+  password: 'teste@123D',
 };
 
 export const authSlice = createSlice({
@@ -24,12 +25,12 @@ export const authSlice = createSlice({
       state.password = action.payload;
     },
     logout: state => {
-      state.isSignedIn = false;
+      state.token = undefined;
     },
   },
   extraReducers(builder) {
     builder.addCase(loginThunk.fulfilled, (state, action) => {
-      state.isSignedIn = action.payload;
+      state.token = action.payload;
       state.email = undefined;
       state.password = undefined;
     });
