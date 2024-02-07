@@ -56,8 +56,7 @@ export const homeSlice = createSlice({
     builder.addCase(fetchList.fulfilled, (state, action) => {
       state.items = action.payload;
     });
-    builder.addCase(buy.fulfilled, (state, action) => {
-      console.log(JSON.stringify(action));
+    builder.addCase(buy.fulfilled, state => {
       state.buyItems = [];
     });
     builder.addCase(fetchPurchased.fulfilled, (state, action) => {

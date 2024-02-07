@@ -46,18 +46,15 @@ export const apiService = async (
           //return await HttpResponseHandleAPI(response);
         } else if (response.status === 401) {
           store.dispatch(logout());
-        } else {
-          console.log(response.status);
         }
       })
       .catch(e => {
         if (e instanceof Error) {
           throw e;
         }
-        console.log(e + url);
         throw new Error(HTTP_NO_CONNECTION);
       });
   } catch (e) {
-    console.log('CATCH');
+    return undefined;
   }
 };

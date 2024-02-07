@@ -27,6 +27,8 @@ export const authSlice = createSlice({
       state.password = action.payload;
     },
     logout: state => {
+      state.email = '';
+      state.password = '';
       state.token = undefined;
     },
   },
