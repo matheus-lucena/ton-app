@@ -36,3 +36,11 @@ Como boa prática e manutenção do produto foram criados componentes que possam
 - Criar tela de gestão de perfil do usuário
 - Logout (já criada chamada no redux)
 - Criação de testes
+
+
+## Aplicativo
+
+
+![Carrinho](/images/cart.png)
+
+![Lista](/images/purched.png)
