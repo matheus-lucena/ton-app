@@ -1,5 +1,6 @@
 # Aplicativo
 Aplicativo com objetivo de se intetegrar ao backend, proporcionando uma usabilidade aos clientes.
+Utilizado a versão 20.0 do nodejs.
 
 ## Iniciando projeto
 O projeto foi criado em react-native, utilizando o minímo de depêndencias externas possíveis.
