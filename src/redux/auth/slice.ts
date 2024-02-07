@@ -1,17 +1,19 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {loginThunk} from './thunk';
-import {LoginResponse} from '../../entity/request/user';
+import {loginThunk, getInfoThunk} from './thunk';
+import {LoginResponse, UserAttributes} from '../../entity/request/user';
 
 export interface HomeState {
   email?: string;
   password?: string;
   token: LoginResponse | undefined;
+  user_attributes?: UserAttributes[];
 }
 
 const initialState: HomeState = {
   token: undefined,
-  email: 'teste@teste.com',
+  email: 'teste6@teste.com',
   password: 'teste@123D',
+  user_attributes: [],
 };
 
 export const authSlice = createSlice({
@@ -33,6 +35,9 @@ export const authSlice = createSlice({
       state.token = action.payload;
       state.email = undefined;
       state.password = undefined;
+    });
+    builder.addCase(getInfoThunk.fulfilled, (state, action) => {
+      state.user_attributes = action.payload?.data?.UserAttributes;
     });
   },
 });

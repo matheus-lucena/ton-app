@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {RootState} from '../store';
 import {MethodApi, apiService} from '../../services/api';
-import {LOGIN_ENDPOINT} from '../../constants/api';
+import {LOGIN_ENDPOINT, USER_INFO_ENDPOINT} from '../../constants/api';
 import {LoginRequest, LoginResponse} from '../../entity/request/user';
 
 export const loginThunk = createAsyncThunk(
@@ -22,5 +22,19 @@ export const loginThunk = createAsyncThunk(
       return response;
     }
     return undefined;
+  },
+);
+
+export const getInfoThunk = createAsyncThunk(
+  'auth/getInfo',
+  async (_, {getState}) => {
+    const rootState = getState() as RootState;
+    const {token} = rootState.auth;
+    return await apiService(
+      USER_INFO_ENDPOINT,
+      MethodApi.GET,
+      undefined,
+      token?.access_token,
+    );
   },
 );

@@ -12,7 +12,7 @@ import {updateLoginEmail, updateLoginPassword} from '../redux/auth/slice';
 import {AppDispatch, RootState} from '../redux/store';
 import {useDispatch, useSelector} from 'react-redux';
 
-function Login(): React.JSX.Element {
+function Login() {
   const dispatch = useDispatch<AppDispatch>();
   const email = useSelector((state: RootState) => state.auth.email);
   const password = useSelector((state: RootState) => state.auth.password);

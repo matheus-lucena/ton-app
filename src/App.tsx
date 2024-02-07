@@ -5,7 +5,6 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ScreensNavigation} from './constants/navigation';
 import Home from './screens/Home';
 import Login from './screens/Login';
-import Splash from './screens/Splash';
 import {RootState, persistor, store} from './redux/store';
 import {PersistGate} from 'redux-persist/integration/react';
 import {LoginResponse} from './entity/request/user';
@@ -26,7 +25,6 @@ const Navigation = () => {
         ) : (
           <>
             <Stack.Screen name={ScreensNavigation.Login} component={Login} />
-            <Stack.Screen name={ScreensNavigation.Splash} component={Splash} />
           </>
         )}
       </Stack.Navigator>

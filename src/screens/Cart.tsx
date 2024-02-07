@@ -1,15 +1,13 @@
 import {useCallback, useEffect, useState} from 'react';
 import React, {
-  Dimensions,
   ScrollView,
   StyleSheet,
   Text,
   View,
   RefreshControl,
 } from 'react-native';
-import LinearGradient from 'react-native-linear-gradient';
 
-import Colors, {HOME_GRADIENT} from '../constants/colors';
+import Colors from '../constants/colors';
 import Button from '../components/Button';
 import ItemList from '../components/home/ItemList';
 import Section from '../components/Section';
@@ -17,11 +15,9 @@ import Product, {ProductState} from '../entity/product';
 import {AppDispatch, RootState} from '../redux/store';
 import {useDispatch, useSelector} from 'react-redux';
 import {decrement, increment} from '../redux/home/slice';
-import {fetchList} from '../redux/home/thunk';
-import {logout} from '../redux/auth/slice';
+import {buy, fetchList} from '../redux/home/thunk';
 import {ProductsResponse} from '../entity/request/product';
-
-const {height} = Dimensions.get('window');
+import Header from '../components/Header';
 
 const Cart = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -59,13 +55,7 @@ const Cart = () => {
   }, [buyItems, items, total]);
 
   return (
-    <View style={styles.container}>
-      <LinearGradient
-        colors={HOME_GRADIENT}
-        style={styles.linearGradientContainer}>
-        <Text style={styles.linearGradientText}>Olá, </Text>
-        <Text style={styles.nameText}>Matheus.Lucena</Text>
-      </LinearGradient>
+    <Header>
       <View style={styles.listContainer}>
         <Section title="Disponíveis">
           <Text style={styles.sectionDescription}>
@@ -99,26 +89,17 @@ const Cart = () => {
         </View>
 
         <Button
-          onPress={() => {
-            console.log('BUY ' + JSON.stringify(buyItems));
-          }}
+          onPress={() => buyItems.length > 0 && dispatch(buy())}
           text={'Comprar'}
           style={styles.buyButton}
           text_style={styles.buyButtonText}
         />
       </View>
-    </View>
+    </Header>
   );
 };
 
 const styles = StyleSheet.create({
-  container: {flex: 1, backgroundColor: Colors.WHITE},
-  linearGradientContainer: {
-    height: height * 0.12,
-    alignItems: 'center',
-    flexDirection: 'row',
-    justifyContent: 'center',
-  },
   priceContainer: {
     flexDirection: 'column',
     justifyContent: 'center',
@@ -142,13 +123,7 @@ const styles = StyleSheet.create({
     borderTopLeftRadius: 20,
     borderTopRightRadius: 20,
     paddingTop: 15,
-    marginTop: -height * 0.02,
     flex: 1,
-  },
-  linearGradientText: {
-    color: Colors.WHITE,
-    fontWeight: 'bold',
-    fontSize: 15,
   },
   buyResume: {
     backgroundColor: 'white',
@@ -156,7 +131,7 @@ const styles = StyleSheet.create({
     borderColor: Colors.LIGHT_GREY,
     flexDirection: 'row',
     justifyContent: 'space-between',
-    height: height * 0.08,
+    height: '8%',
     alignItems: 'center',
   },
   sectionDescription: {
@@ -168,7 +143,6 @@ const styles = StyleSheet.create({
     marginTop: 15,
   },
   textPrice: {fontWeight: 'bold', color: 'black'},
-  nameText: {color: Colors.WHITE},
 });
 
 export default Cart;

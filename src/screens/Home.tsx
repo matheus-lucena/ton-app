@@ -4,6 +4,7 @@ import {ScreensNavigation} from '../constants/navigation';
 import Cart from './Cart';
 import EntypoIcon from 'react-native-vector-icons/Entypo';
 import Colors from '../constants/colors';
+import PurchedHistory from './PurchedHistory';
 
 const Tab = createBottomTabNavigator();
 
@@ -11,7 +12,7 @@ function Home() {
   return (
     <Tab.Navigator
       screenOptions={{headerShown: false}}
-      initialRouteName={ScreensNavigation.Cart}>
+      initialRouteName={ScreensNavigation.Home}>
       <Tab.Screen
         options={{
           tabBarLabel: 'Carrinho',
@@ -25,7 +26,7 @@ function Home() {
         component={Cart}
       />
 
-      {/*<Tab.Screen
+      <Tab.Screen
         options={{
           tabBarLabel: 'Histórico',
           tabBarLabelStyle: {color: Colors.PRIMARY},
@@ -34,9 +35,9 @@ function Home() {
             <EntypoIcon name={'list'} size={20} color={Colors.GREY} />
           ),
         }}
-        name={ScreensNavigation.Cart}
-        component={Cart}
-      />*/}
+        name={ScreensNavigation.PurchedHistory}
+        component={PurchedHistory}
+      />
     </Tab.Navigator>
   );
 }

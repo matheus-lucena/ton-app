@@ -23,7 +23,6 @@ export const apiService = async (
 ): Promise<any> => {
   try {
     const url = API_BASE_URL + path;
-    console.log(url);
     return fetch(url, {
       method: method.valueOf(),
       headers: {
@@ -52,7 +51,6 @@ export const apiService = async (
         }
       })
       .catch(e => {
-        console.log(e);
         if (e instanceof Error) {
           throw e;
         }

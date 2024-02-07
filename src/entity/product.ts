@@ -5,6 +5,10 @@ interface Product {
   value: number;
 }
 
+export interface ProductItemState extends Product {
+  count: number;
+}
+
 export interface ProductState extends Product {
   count?: number;
 }

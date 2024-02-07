@@ -8,3 +8,8 @@ export interface LoginResponse {
   refresh_token: string;
   expires_in: number;
 }
+
+export interface UserAttributes {
+  Name: string;
+  Value: string;
+}

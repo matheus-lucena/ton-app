@@ -1,19 +1,18 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import Item from '../../entity/product';
-import {fetchList} from './thunk';
+import Product, {ProductItemState} from '../../entity/product';
+import {fetchList, buy, fetchPurchased} from './thunk';
 import {ProductsResponse} from '../../entity/request/product';
-
-interface ItemState extends Item {
-  count: number;
-}
+import {PurchedResponse} from '../../entity/shop';
 
 export interface HomeState {
-  buyItems: ItemState[];
+  buyItems: ProductItemState[];
+  purchedResponse: PurchedResponse | undefined;
   items: ProductsResponse | undefined;
 }
 
 const initialState: HomeState = {
   buyItems: [],
+  purchedResponse: undefined,
   items: undefined,
 };
 
@@ -21,8 +20,8 @@ export const homeSlice = createSlice({
   name: 'homeState',
   initialState,
   reducers: {
-    increment: (state, action: PayloadAction<Item>) => {
-      const item: ItemState | undefined = state.buyItems.find(
+    increment: (state, action: PayloadAction<Product>) => {
+      const item: ProductItemState | undefined = state.buyItems.find(
         _value => _value.sn === action.payload.sn,
       );
       if (item) {
@@ -37,8 +36,8 @@ export const homeSlice = createSlice({
         });
       }
     },
-    decrement: (state, action: PayloadAction<Item>) => {
-      const item: ItemState | undefined = state.buyItems.find(
+    decrement: (state, action: PayloadAction<Product>) => {
+      const item: ProductItemState | undefined = state.buyItems.find(
         _value => _value.sn === action.payload.sn,
       );
       if (item) {
@@ -56,6 +55,13 @@ export const homeSlice = createSlice({
   extraReducers(builder) {
     builder.addCase(fetchList.fulfilled, (state, action) => {
       state.items = action.payload;
+    });
+    builder.addCase(buy.fulfilled, (state, action) => {
+      console.log(JSON.stringify(action));
+      state.buyItems = [];
+    });
+    builder.addCase(fetchPurchased.fulfilled, (state, action) => {
+      state.purchedResponse = action.payload;
     });
   },
 });
