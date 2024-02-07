@@ -1,5 +1,5 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
-import {RootState} from '../store';
+import type {RootState} from '../store';
 import {MethodApi, apiService} from '../../services/api';
 import {LOGIN_ENDPOINT, USER_INFO_ENDPOINT} from '../../constants/api';
 import {LoginRequest, LoginResponse} from '../../entity/request/user';

@@ -11,8 +11,8 @@ export interface HomeState {
 
 const initialState: HomeState = {
   token: undefined,
-  email: 'teste6@teste.com',
-  password: 'teste@123D',
+  email: '',
+  password: '',
   user_attributes: [],
 };
 

@@ -1,7 +1,7 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import {MethodApi, apiService} from '../../services/api';
 import {BUY_PRODUCTS, LIST_PRODUCTS} from '../../constants/api';
-import {RootState} from '../store';
+import type {RootState} from '../store';
 import {BuyProductsRequest} from '../../entity/request/product';
 
 export const fetchList = createAsyncThunk(
