@@ -9,7 +9,7 @@ interface Props {
 const ItemList = (props: Props) => {
   const {item} = props;
   return (
-    <View style={styles.container}>
+    <View testID={item.id} style={styles.container}>
       <View style={styles.itemContainer}>
         <View style={styles.imageContainer}>
           <Image

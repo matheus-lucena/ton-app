@@ -13,7 +13,7 @@ interface Props {
 const ItemList = (props: Props) => {
   const {item, count, onPressSub, onPressAdd} = props;
   return (
-    <View style={styles.container}>
+    <View testID={item.sn} style={styles.container}>
       <View style={styles.itemContainer}>
         <View style={styles.imageContainer}>
           <Image width={25} height={40} source={{uri: item.image_url}} />

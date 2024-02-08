@@ -1,8 +1,13 @@
 import {createAsyncThunk} from '@reduxjs/toolkit';
 import type {RootState} from '../store';
 import {MethodApi, apiService} from '../../services/api';
-import {LOGIN_ENDPOINT, USER_INFO_ENDPOINT} from '../../constants/api';
+import {
+  ASYNC_TOKEN_KEY,
+  LOGIN_ENDPOINT,
+  USER_INFO_ENDPOINT,
+} from '../../constants/api';
 import {LoginRequest, LoginResponse} from '../../entity/request/user';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 export const loginThunk = createAsyncThunk(
   'auth/login',
@@ -19,22 +24,35 @@ export const loginThunk = createAsyncThunk(
         MethodApi.POST,
         data,
       );
-      return response;
+      await AsyncStorage.setItem(ASYNC_TOKEN_KEY, response?.access_token);
+      return response?.access_token;
     }
     return undefined;
   },
 );
 
-export const getInfoThunk = createAsyncThunk(
-  'auth/getInfo',
-  async (_, {getState}) => {
-    const rootState = getState() as RootState;
-    const {token} = rootState.auth;
+export const getInfoThunk = createAsyncThunk('auth/getInfo', async (_, {}) => {
+  const token = await AsyncStorage.getItem(ASYNC_TOKEN_KEY);
+  if (token) {
     return await apiService(
       USER_INFO_ENDPOINT,
       MethodApi.GET,
       undefined,
-      token?.access_token,
+      token,
     );
+  }
+});
+
+export const getTokenThunk = createAsyncThunk(
+  'auth/getToken',
+  async (_, {}) => {
+    return await AsyncStorage.getItem(ASYNC_TOKEN_KEY);
+  },
+);
+
+export const logoutThunk = createAsyncThunk(
+  'auth/logoutThunk',
+  async (_, {}) => {
+    return await AsyncStorage.removeItem(ASYNC_TOKEN_KEY);
   },
 );

@@ -18,6 +18,7 @@ import {decrement, increment} from '../redux/home/slice';
 import {buy, fetchList} from '../redux/home/thunk';
 import {ProductsResponse} from '../entity/request/product';
 import Header from '../components/Header';
+import {logoutThunk} from '../redux/auth/thunk';
 
 const Cart = () => {
   const [refreshing, setRefreshing] = useState(false);
@@ -41,7 +42,7 @@ const Cart = () => {
 
   useEffect(() => {
     dispatch(fetchList());
-    //dispatch(logout());
+    //dispatch(logoutThunk());
   }, [dispatch]);
 
   useEffect(() => {

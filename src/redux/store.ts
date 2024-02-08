@@ -1,20 +1,14 @@
-import {configureStore, ThunkAction, Action} from '@reduxjs/toolkit';
-import homeSliceReducer from './home/slice';
-import authSliceReducer from './auth/slice';
 import {
-  persistCombineReducers,
-  persistStore,
-  FLUSH,
-  REHYDRATE,
-  PAUSE,
-  PERSIST,
-  PURGE,
-  REGISTER,
-} from 'redux-persist';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+  configureStore,
+  ThunkAction,
+  Action,
+  combineReducers,
+} from '@reduxjs/toolkit';
+import home from './home/slice';
+import auth from './auth/slice';
 
 export type RootState = ReturnType<typeof store.getState>;
-
+export type AppStore = typeof store;
 export type AppDispatch = typeof store.dispatch;
 export type AppThunk<ReturnType = void> = ThunkAction<
   ReturnType,
@@ -23,24 +17,10 @@ export type AppThunk<ReturnType = void> = ThunkAction<
   Action<string>
 >;
 
-const persistConfig = {
-  key: 'root',
-  storage: AsyncStorage,
-};
-
-const persistedReducer = persistCombineReducers(persistConfig, {
-  home: homeSliceReducer,
-  auth: authSliceReducer,
-});
-
+const allReducers = combineReducers({home, auth});
 export const store = configureStore({
-  reducer: persistedReducer,
-  middleware: getDefaultMiddleware =>
-    getDefaultMiddleware({
-      serializableCheck: {
-        ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
-      },
-    }),
+  reducer: allReducers,
+  middleware: getDefaultMiddleware => getDefaultMiddleware(),
 });
 
-export const persistor = persistStore(store);
+export default store;

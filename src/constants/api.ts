@@ -8,3 +8,5 @@ export const USER_INFO_ENDPOINT = '/auth';
 export const LIST_PRODUCTS = '/products';
 
 export const BUY_PRODUCTS = '/shop';
+
+export const ASYNC_TOKEN_KEY = 'app-token';

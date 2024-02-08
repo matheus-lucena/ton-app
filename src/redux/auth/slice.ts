@@ -1,16 +1,16 @@
 import {PayloadAction, createSlice} from '@reduxjs/toolkit';
-import {loginThunk, getInfoThunk} from './thunk';
-import {LoginResponse, UserAttributes} from '../../entity/request/user';
+import {loginThunk, getInfoThunk, getTokenThunk, logoutThunk} from './thunk';
+import {UserAttributes} from '../../entity/request/user';
 
-export interface HomeState {
+export interface AuthState {
+  isAutenticated: boolean | undefined;
   email?: string;
   password?: string;
-  token: LoginResponse | undefined;
   user_attributes?: UserAttributes[];
 }
 
-const initialState: HomeState = {
-  token: undefined,
+const initialState: AuthState = {
+  isAutenticated: undefined,
   email: '',
   password: '',
   user_attributes: [],
@@ -26,25 +26,27 @@ export const authSlice = createSlice({
     updateLoginPassword: (state, action: PayloadAction<string>) => {
       state.password = action.payload;
     },
-    logout: state => {
-      state.email = '';
-      state.password = '';
-      state.token = undefined;
-    },
   },
   extraReducers(builder) {
     builder.addCase(loginThunk.fulfilled, (state, action) => {
-      state.token = action.payload;
-      state.email = undefined;
-      state.password = undefined;
+      if (action.payload) {
+        state.email = undefined;
+        state.password = undefined;
+        state.isAutenticated = true;
+      }
     });
     builder.addCase(getInfoThunk.fulfilled, (state, action) => {
       state.user_attributes = action.payload?.data?.UserAttributes;
     });
+    builder.addCase(getTokenThunk.fulfilled, (state, action) => {
+      state.isAutenticated = action.payload ? true : false;
+    });
+    builder.addCase(logoutThunk.fulfilled, state => {
+      state.isAutenticated = false;
+    });
   },
 });
 
-export const {updateLoginEmail, updateLoginPassword, logout} =
-  authSlice.actions;
+export const {updateLoginEmail, updateLoginPassword} = authSlice.actions;
 
 export default authSlice.reducer;

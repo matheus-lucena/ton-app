@@ -5,27 +5,30 @@ import {createNativeStackNavigator} from '@react-navigation/native-stack';
 import {ScreensNavigation} from './constants/navigation';
 import Home from './screens/Home';
 import Login from './screens/Login';
-import {RootState, persistor, store} from './redux/store';
-import {PersistGate} from 'redux-persist/integration/react';
-import {LoginResponse} from './entity/request/user';
-
+import Splash from './screens/Splash';
+import {RootState, store} from './redux/store';
 const Stack = createNativeStackNavigator();
 
 const Navigation = () => {
-  const token: LoginResponse | undefined = useSelector(
-    (state: RootState) => state.auth.token,
+  const isAutenticated: boolean | undefined = useSelector(
+    (state: RootState) => state.auth.isAutenticated,
   );
+
   return (
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{headerShown: false}}
-        initialRouteName={ScreensNavigation.Login}>
-        {token ? (
+        initialRouteName={ScreensNavigation.Splash}>
+        {isAutenticated && (
           <Stack.Screen name={ScreensNavigation.Home} component={Home} />
-        ) : (
+        )}
+        {isAutenticated !== undefined && !isAutenticated && (
           <>
             <Stack.Screen name={ScreensNavigation.Login} component={Login} />
           </>
+        )}
+        {isAutenticated === undefined && (
+          <Stack.Screen name={ScreensNavigation.Splash} component={Splash} />
         )}
       </Stack.Navigator>
     </NavigationContainer>
@@ -34,9 +37,7 @@ const Navigation = () => {
 function App() {
   return (
     <Provider store={store}>
-      <PersistGate loading={null} persistor={persistor}>
-        <Navigation />
-      </PersistGate>
+      <Navigation />
     </Provider>
   );
 }
